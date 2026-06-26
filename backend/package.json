@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/server.js"
+    "build": "shx rm -rf dist && shx cp -r src dist",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.5.0",
-    "globals": "^17.7.0"
+    "globals": "^17.7.0",
+    "shx": "^0.4.0"
   }
 }
