@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
         return res.status(200).json({ received: true })
     } 
     catch (error) {
-        console.error("Error in Clerk webhook:", error)
+        console.error("Error in Clerk webhook:", error.message)
         return res.status(400).json({ message: "Webhook verification failed" })    
     }
 })
