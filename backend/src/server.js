@@ -8,6 +8,7 @@ import { clerkMiddleware } from '@clerk/express'
 import job from './lib/cron.js'
 import clerkWebhook from './webhooks/clerk.webhook.js'
 import authRoutes from './routes/auth.route.js'
+import messageRoutes from './routes/message.route.js'
 
 const app = express()
 const PORT = process.env.PORT
@@ -28,6 +29,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes)
+app.use("/api/messages", messageRoutes)
 
 // if the public directory exists, serve the static files (for production build)
 if(fs.existsSync(publicDir)){

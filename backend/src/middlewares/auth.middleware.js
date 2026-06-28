@@ -4,6 +4,8 @@ import User from "../models/user.model.js";
 const protectedRoute = async (req, res, next) => {
     try {
         const { userId } = getAuth(req)
+        // The getAuth() helper retrieves authentication state from the request object. It returns the Auth object, which includes helpful authentication information like the user's ID, session ID, and Organization ID. It's also useful for protecting routes.
+        
         if(!userId) return res.status(401).json({ error: "Unauthorized" })
             
         const user = await User.findOne({ clerkId: userId })
