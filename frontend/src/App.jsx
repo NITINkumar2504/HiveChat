@@ -1,20 +1,24 @@
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react"
+import { useAuth } from "@clerk/react"
+import { WallpaperProvider } from "./context/WallpaperContext"
+import { ThemeProvider } from "./context/ThemeContext"
+import { Navigate, Route, Routes } from "react-router"
+import ChatPage from "./pages/ChatPage"
+import AuthPage from "./pages/AuthPage"
 
 function App() {
+  const { isSignedIn, isLoaded } = useAuth()
+  if(!isLoaded) return <p>Loading...</p>
 
   return (
-    <div>
-      <h1>My app</h1>
-      <header>
-        <Show when="signed-out">
-          <SignInButton mode="modal"/>
-          <SignUpButton mode="modal"/>
-        </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
-      </header>
-    </div>
+    <ThemeProvider>
+      <WallpaperProvider>
+        <Routes>
+          {/* changes the URL to /auth and replaces the current history entry so the user cannot press the "Back" button and get stuck in an unauthorized loop */}
+          <Route path="/" element={isSignedIn ? <ChatPage /> : <Navigate to={"/auth"} replace />}/>  
+          <Route path="/auth" element={!isSignedIn ? <AuthPage /> : <Navigate to={"/chat"} replace />}/>
+        </Routes>
+      </WallpaperProvider>
+    </ThemeProvider>
   )
 }
 
