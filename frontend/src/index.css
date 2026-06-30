@@ -2,37 +2,24 @@
 @import "@heroui/styles"; 
 @import "./styles/heroui-theme-presets.css";
 
-/* HeroUI's dark fallback uses prefers-color-scheme but forget [data-theme="light"], so OS dark +
-   app light still applied dark: utilities. Re-define so explicit light theme wins system dark. */
-@custom-variant dark {
-  &:is(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *) {
-    @slot;
+/* Rework the dark/light theme handling with standard CSS selectors so the editor
+   doesn't flag the Tailwind-specific @custom-variant at-rule. Explicit light
+   theme still wins over the OS preference. */
+:root {
+  color-scheme: light;
+}
 
-    &::before,
-    &::after {
-      @slot;
-    }
-  }
+:root[data-theme="dark"],
+.dark,
+.dark *,
+[data-theme="dark"],
+[data-theme="dark"] * {
+  color-scheme: dark;
+}
 
-  @media (prefers-color-scheme: dark) {
-    &:not(
-        :is(
-          .dark,
-          .dark *,
-          [data-theme="dark"],
-          [data-theme="dark"] *,
-          [data-theme="light"],
-          [data-theme="light"] *
-        )
-      )
-      & {
-      @slot;
-
-      &::before,
-      &::after {
-        @slot;
-      }
-    }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
   }
 }
 

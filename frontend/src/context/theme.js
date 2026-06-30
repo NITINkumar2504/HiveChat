@@ -22,3 +22,22 @@ export function useTheme() {
   }
   return ctx;
 }
+
+
+// 1. Create the Context
+  // Initialize a context object using React's built-in initialization method.
+  // Use createContext(): Call this function to create your context container.
+  // Set Default Values: Pass an optional default value into the function.
+  // Export Context: Make the context object accessible to other files
+
+// 2. Provide the Context
+  // Wrap the target component tree with a provider component to make the data globally available.
+  // Use <Context.Provider>: Use the provider property attached to your context objec
+  // t.Pass the value Prop: Put any state, object, or function you want to share inside this prop.
+  // Wrap Root/Parent: Nest your child components inside this provider component
+
+// 3. Consume the Context
+  // Read the shared context data directly inside any nested child component.
+  // Import useContext: Use React’s built-in hook for functional components.
+  // Pass Context Object: Supply your specific context file into the hook.
+  // Extract and Use: Destructure the exact states or functions needed.
