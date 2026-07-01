@@ -5,7 +5,7 @@ import path from 'path'
 import "dotenv/config"
 import { connectDB } from './lib/db.js'
 import { clerkMiddleware } from '@clerk/express'
-    import job from './lib/cron.js'
+import job from './lib/cron.js'
 import clerkWebhook from './webhooks/clerk.webhook.js'
 import authRoutes from './routes/auth.route.js'
 import messageRoutes from './routes/message.route.js'
