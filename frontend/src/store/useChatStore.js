@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware'
 import { axiosInstance } from '../lib/axios.js';
 import { useAuthStore } from './useAuthStore.js';
 import toast from 'react-hot-toast'
 
-export const useChatStore = create((set, get) => ({
+export const useChatStore = create(persist(
+    (set, get) => ({
     users: [],
     conversations: [],
     messages: [],
@@ -121,7 +123,7 @@ export const useChatStore = create((set, get) => ({
     },
 
     setSearchQuery: (searchQuery) => set({ searchQuery }),
-    setSideBar: (sideBarTab) => set({ sideBarTab }),
+    setSideBarTab: (sideBarTab) => set({ sideBarTab }),
     setComposerText: (composerText) => set({ composerText }),
     setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
 
@@ -147,4 +149,9 @@ export const useChatStore = create((set, get) => ({
             set({ isSendingMedia: false })
         }
     }
-}))
+    }),
+    {
+        name: "HiveChat-store",
+        partialize: (state) => ({ isSoundEnabled: state.isSoundEnabled })
+    },
+))
