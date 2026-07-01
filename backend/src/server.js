@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'express'
+import cors from 'cors'
 import fs from 'fs'
 import path from 'path'
 import "dotenv/config"
@@ -40,7 +40,7 @@ if(fs.existsSync(publicDir)){
     })
 }
 
-server.listen(3000, () => {
+server.listen(PORT, () => {
     connectDB()
     console.log(`Server is listening at http://localhost:${PORT}`)
 

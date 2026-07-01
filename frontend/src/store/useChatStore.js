@@ -96,7 +96,7 @@ export const useChatStore = create(persist(
 
         socket.off("newMessage")   // optional (optimization)
         socket.on("newMessage", (newMessage) => {    // subscribe
-            // if i am not the receiver don't do anything
+            // Ignore messages that are not from the currently selected chat partner, without the line: all incoming socket messages are appended, even if they belong to another conversation
             if(String(newMessage.senderId) !== String(userId)) return
 
             set({ messages: [...get().messages, newMessage] })
@@ -118,8 +118,8 @@ export const useChatStore = create(persist(
                 state.users.find((user) => user._id === activeConversationId) || 
                 state.conversations.find((user) => user._id === activeConversationId) || 
                 null,
-            messages: activeConversationId? state.messages : []
         }))
+        get().getMessages(activeConversationId)
     },
 
     setSearchQuery: (searchQuery) => set({ searchQuery }),

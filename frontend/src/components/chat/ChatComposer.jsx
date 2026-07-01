@@ -4,6 +4,7 @@ import { useRef } from "react";
 import useKeyboardSound from "../../hooks/useKeyboardSound";
 import { useChatStore } from "../../store/useChatStore";
 import { useSelectedConversation } from "../../hooks/useSelectedConversation";
+import toast from "react-hot-toast";
 
 function ChatComposer() {
   const composerText = useChatStore((state) => state.composerText);
@@ -33,10 +34,14 @@ function ChatComposer() {
   const handleMediaPick = async (event) => {
     const file = event.target.files?.[0];      
     // event.target.files[0] represents the first file selected by a user inside an HTML <input type="file"> element
+    if (!file) return;
     
     event.target.value = "";
-    if (!file) return;
-
+    if(file.size > 25*1024*1024) {
+      toast.error("File too large. Max size is 25MB")
+      return 
+    }
+      
     const didSendMessage = await sendMediaMessage({
       conversationId: activeConversationId,
       file,
